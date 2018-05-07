@@ -6,7 +6,7 @@ DIFFUSE = 1
 SPECULAR = 2
 LOCATION = 0
 COLOR = 1
-SPECULAR_EXP = 4
+SPECULAR_EXP = 10
 
 #lighting functions
 def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
