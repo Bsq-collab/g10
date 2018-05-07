@@ -6,13 +6,18 @@ DIFFUSE = 1
 SPECULAR = 2
 LOCATION = 0
 COLOR = 1
-SPECULAR_EXP = 10
+SPECULAR_EXP = 4
 
 #lighting functions
 def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
     amb=calculate_ambient(ambient,areflect)
     dif= calculate_diffuse(light,dreflect,normal)
     spec=calculate_specular(light,sreflect,view,normal)
+    color=[]
+    for i in range(0,3):
+        color.append(amb[i]+diff[i]+spec[i])
+    print color
+    return limit_color(color)
 
 def calculate_ambient(alight, areflect):
     amb=[]
