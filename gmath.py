@@ -10,45 +10,43 @@ SPECULAR_EXP = 4
 
 #lighting functions
 def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
-    amb=calculate_ambient(ambient,areflect)
-    dif= calculate_diffuse(light,dreflect,normal)
-    spec=calculate_specular(light,sreflect,view,normal)
-    color=[]
-    for i in range(0,3):
-        color.append(amb[i]+diff[i]+spec[i])
-    print color
-    return limit_color(color)
+  amb = calculate_ambient(ambient, areflect)
+  dif = calculate_diffuse(light, dreflect, normal)
+  spec = calculate_specular(light, sreflect, view, normal)
+  color = []
+  for i in range(0, 3):
+    color.append(amb[i] + dif[i] + spec[i])
+  print color
+  return limit_color(color)
 
 def calculate_ambient(alight, areflect):
-    amb=[]
-    for i in range(0,3):
-        amb.append(alight[i]*areflect[i])
+    amb = []
+    for i in range(0, 3):
+        amb.append(alight[i] * areflect[i])
     return limit_color(amb)
 
 def calculate_diffuse(light, dreflect, normal):
-    diff=[]
-    for i in range(0,3):
-        diff.append(light[COLOR][i]*dreflect[i]*dot_product(normalize(normal),normalize(light[LOCATION])))
-        return limit_color(diff)
+    dif = []
+    for i in range(0, 3):
+        dif.append(light[COLOR][i] * dreflect[i] * dot_product(normalize(normal), normalize(light[LOCATION])))
+    return limit_color(dif)
 
 def calculate_specular(light, sreflect, view, normal):
-    normal=normalize(normal)
-    light_location=normalize(light[LOCATION])
-    view = normalize(view)
-
-    if(dot_product(normal,light_location)<=0):
-        return[0,0,0]
-    else:
-        s=[]
-        r=[]
-        ndl=2*dot_product(normal,light_location)
-        for i in range(0,3):
-            r.append(ndl*normal[i]-light_location[i])
-        cosa=dot_product(r,view)
-        for i in range (0,3):
-            s.append(light[COLOR][i]*sreflect[i]*(cosa** SPECULAR_EXP))
-        return limit_color(s)
-
+  normal = normalize(normal)
+  lightloc = normalize(light[LOCATION])
+  view = normalize(view)
+  if (dot_product(normal, lightloc) <= 0):
+    return [0, 0, 0]
+  else:
+    s = []
+    R = []
+    NdL = 2 * dot_product(normal, lightloc)
+    for i in range(0, 3):
+      R.append(NdL * normal[i] - lightloc[i])
+    cosa = dot_product(R, view)
+    for i in range(0, 3):
+      s.append(light[COLOR][i] * sreflect[i] * (cosa ** SPECULAR_EXP))
+    return limit_color(s)
 def limit_color(color):
     for i in range (0,3):
         rgb=color[i]
